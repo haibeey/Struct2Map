@@ -38,9 +38,7 @@ func TestStruct2Map(t *testing.T) {
 	}
 	_, err = Struct2Map(Struct)
 	if err != nil {
-		if err == nil {
-			t.Errorf(err.Error())
-		}
+		t.Errorf(err.Error())
 	}
 
 }
