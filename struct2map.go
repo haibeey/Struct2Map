@@ -7,8 +7,8 @@ import (
 
 //Struct2Map converts a go structs to a map
 func Struct2Map(model interface{}) (map[string]interface{}, error) {
-	if model==nil{
-		return nil,nil
+	if model == nil {
+		return nil, nil
 	}
 	ret := make(map[string]interface{})
 
@@ -23,12 +23,15 @@ func Struct2Map(model interface{}) (map[string]interface{}, error) {
 		return ret, nil
 	case reflect.Ptr:
 		modelReflect = modelReflect.Elem()
+	case reflect.Struct, reflect.Interface:
 	default:
-		return nil, fmt.Errorf("Passed value must be a map or pointer or a struct")
+		return nil, fmt.Errorf("Passed value must be a map or pointer or a struct ?")
 	}
 
 	if modelReflect.Kind() != reflect.Struct {
-		return nil, fmt.Errorf("Passed value must be a map or point or a struct")
+		if modelReflect.Kind() != reflect.Interface {
+			return nil, fmt.Errorf("Passed value must be a map or pointer or a struct %d", modelReflect.Kind())
+		}
 	}
 	modelRefType := modelReflect.Type()
 	fieldsCount := modelReflect.NumField()

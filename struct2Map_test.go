@@ -1,8 +1,8 @@
 package struct2map
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 )
 
 type emptyStruct struct{}
@@ -43,5 +43,13 @@ func TestStruct2Map(t *testing.T) {
 	}
 	fmt.Println(v)
 
+	var a interface{}
+	a = testStruct{}
+	v, err = Struct2Map(a)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	fmt.Println(v)
 
 }
