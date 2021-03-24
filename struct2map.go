@@ -7,6 +7,9 @@ import (
 
 //Struct2Map converts a go structs to a map
 func Struct2Map(model interface{}) (map[string]interface{}, error) {
+	if model==nil{
+		return nil,nil
+	}
 	ret := make(map[string]interface{})
 
 	modelReflect := reflect.ValueOf(model)
@@ -39,6 +42,9 @@ loop:
 		if field.IsZero() {
 			switch field.Kind() {
 			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+				ret[modelRefType.Field(i).Name] = 0
+			case reflect.String:
+				ret[modelRefType.Field(i).Name] = ""
 			default:
 				continue loop
 			}

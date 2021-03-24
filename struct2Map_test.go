@@ -2,6 +2,7 @@ package struct2map
 
 import (
 	"testing"
+	"fmt"
 )
 
 type emptyStruct struct{}
@@ -17,8 +18,8 @@ type testStruct struct {
 
 func TestStruct2Map(t *testing.T) {
 
-	Number := 10
-	Str := "structtomap"
+	Number := 0
+	Str := ""
 	Struct := testStruct{
 		Number:  Number,
 		Str:     Str,
@@ -36,9 +37,11 @@ func TestStruct2Map(t *testing.T) {
 	if err == nil {
 		t.Errorf(err.Error())
 	}
-	_, err = Struct2Map(Struct)
+	v, err := Struct2Map(&Struct)
 	if err != nil {
 		t.Errorf(err.Error())
 	}
+	fmt.Println(v)
+
 
 }
