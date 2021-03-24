@@ -25,12 +25,12 @@ func Struct2Map(model interface{}) (map[string]interface{}, error) {
 		modelReflect = modelReflect.Elem()
 	case reflect.Struct, reflect.Interface:
 	default:
-		return nil, fmt.Errorf("Passed value must be a map or pointer or a struct ?")
+		return nil, fmt.Errorf("Passed value must be a map or pointer or a struct")
 	}
 
 	if modelReflect.Kind() != reflect.Struct {
 		if modelReflect.Kind() != reflect.Interface {
-			return nil, fmt.Errorf("Passed value must be a map or pointer or a struct %d", modelReflect.Kind())
+			return nil, fmt.Errorf("Passed value must be a map or pointer or a struct")
 		}
 	}
 	modelRefType := modelReflect.Type()
