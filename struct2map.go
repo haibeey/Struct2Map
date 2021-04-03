@@ -64,7 +64,7 @@ loop:
 				return ret, err
 			}
 		default:
-			
+			fieldData = field.Interface()
 		}
 
 		ret[modelRefType.Field(i).Name] = fieldData
