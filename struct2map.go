@@ -28,11 +28,10 @@ func Struct2Map(model interface{}) (map[string]interface{}, error) {
 		return nil, fmt.Errorf("Passed value must be a map or pointer or a struct")
 	}
 
-	if modelReflect.Kind() != reflect.Struct {
-		if modelReflect.Kind() != reflect.Interface {
-			return nil, fmt.Errorf("Passed value must be a map or pointer or a struct")
-		}
+	if modelReflect.Kind() != reflect.Struct  && modelReflect.Kind() != reflect.Interface{
+		return nil, fmt.Errorf("Passed value must be a map or pointer or a struct")
 	}
+
 	modelRefType := modelReflect.Type()
 	fieldsCount := modelReflect.NumField()
 
@@ -42,13 +41,18 @@ func Struct2Map(model interface{}) (map[string]interface{}, error) {
 loop:
 	for i := 0; i < fieldsCount; i++ {
 		field := modelReflect.Field(i)
+		if !field.CanInterface(){
+			continue loop
+		}
 		if field.IsZero() {
+			fmt.Println(field,"hmmmm")
 			switch field.Kind() {
 			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 				ret[modelRefType.Field(i).Name] = 0
 			case reflect.String:
 				ret[modelRefType.Field(i).Name] = ""
 			default:
+				ret[modelRefType.Field(i).Name] = nil
 				continue loop
 			}
 		}
@@ -61,7 +65,7 @@ loop:
 				return ret, err
 			}
 		default:
-			fieldData = field.Interface()
+			
 		}
 
 		ret[modelRefType.Field(i).Name] = fieldData
