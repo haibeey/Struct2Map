@@ -45,7 +45,6 @@ loop:
 			continue loop
 		}
 		if field.IsZero() {
-			fmt.Println(field,"hmmmm")
 			switch field.Kind() {
 			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 				ret[modelRefType.Field(i).Name] = 0
